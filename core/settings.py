@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "apps.users",
+    "apps.cars",
 ]
 
 AUTH_USER_MODEL = "users.User"
