@@ -6,10 +6,8 @@
 
 - It is a simple CRUD API that allows users view the different cars available. However, only the admin can add, update and delete cars but this can be changed in the permissions section of the admin site.
 
-- The Database Schema is as shown below:
-
-    <iframe width="560" height="315" src='https://dbdiagram.io/embed/6493d57702bd1c4a5ee1430a'> </iframe>
-
+- The Database design schema can be found here: https://dbdiagram.io/d/6493d57702bd1c4a5ee1430a
+ 
 - All app permissions, including creating new users, are handled by the admin on the admin site.
 
 ---
