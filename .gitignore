@@ -9,3 +9,7 @@
 
 # Database
 db.sqlite3
+
+# Media
+media/cars/*
+!media/cars/delete_me.txt
