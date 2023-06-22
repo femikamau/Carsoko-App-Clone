@@ -22,7 +22,7 @@
     pip install -r requirements.txt
     ```
 
-3. Create a `.env` file and add the following configurations:
+3. Create a `.env` file in the at the root of the project and add the following configurations:
 
     ```bash
     SECRET_KEY='<your_secret_key>'
