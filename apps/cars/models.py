@@ -19,6 +19,7 @@ class CarFeature(TimeStampedModel):
     class Meta:
         verbose_name = "Feature"
         verbose_name_plural = "Features"
+        ordering = ["id"]
 
 
 class Car(TimeStampedModel):
@@ -113,6 +114,9 @@ class Car(TimeStampedModel):
 
     features = models.ManyToManyField(CarFeature, related_name="cars", blank=True)
 
+    class Meta:
+        ordering = ["id"]
+
     def __str__(self):
         return f"{self.year} {self.model} {self.make}"
 
@@ -134,3 +138,4 @@ class CarImage(TimeStampedModel):
     class Meta:
         verbose_name = "Image"
         verbose_name_plural = "Images"
+        ordering = ["id"]
