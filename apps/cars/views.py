@@ -31,10 +31,20 @@ class CarImageViewSet(ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
-    def destroy(self, request, *args, **kwargs):
+    def update(self, request, *args, **kwargs):
         # Check if the user is the owner of the image
         car_image = self.get_object()
         if car_image.user != request.user:
+            return Response(
+                {"detail": "You do not have permission to edit this image."},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+        return super().update(request, *args, **kwargs)
+
+    def destroy(self, request, *args, **kwargs):
+        # Check if the user is the owner of the image
+        car_image = self.get_object()
+        if car_image.user != request.user and not request.user.is_staff:
             return Response(
                 {"detail": "You do not have permission to delete this image."},
                 status=status.HTTP_403_FORBIDDEN,
