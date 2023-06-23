@@ -25,3 +25,12 @@ class User(PermissionsMixin, AbstractBaseUser, TimeStampedModel):
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name", "last_name"]
+
+    class Meta:
+        ordering = ["-created"]
+
+    def __str__(self):
+        """
+        Return the email of the user as the string representation.
+        """
+        return self.email

@@ -12,6 +12,8 @@ django = "^4.2.2"
 djangorestframework = "^3.14.0"
 pillow = "^9.5.0"
 djangorestframework-filters = "^0.11.1"
+coverage = "^7.2.7"
+factory-boy = "^3.2.1"
 
 
 [tool.poetry.group.dev.dependencies]
