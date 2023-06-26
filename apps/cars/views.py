@@ -1,3 +1,4 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.response import Response
@@ -14,10 +15,20 @@ class CarViewSet(ModelViewSet):
 
     queryset = Car.objects.prefetch_related("features").all()
     serializer_class = CarSerializer
-    filter_backends = (SearchFilter, OrderingFilter)
-    filterset_fields = ("make", "model", "year", "price", "mileage", "engine_size")
-    search_fields = ("make", "model", "year", "price", "mileage", "engine_size")
+    filter_backends = (SearchFilter, OrderingFilter, DjangoFilterBackend)
+    search_fields = ("make", "model")
     ordering_fields = ("year", "price", "mileage", "engine_size")
+    filterset_fields = {
+        "year": ["gte", "lte"],
+        "price": ["lte"],
+        "mileage": ["lte"],
+        "engine_size": ["gte", "lte"],
+        "transmission": ["exact"],
+        "fuel_type": ["exact"],
+        "body_type": ["exact"],
+        "drive_type": ["exact"],
+        "condition": ["exact"],
+    }
 
 
 class CarImageViewSet(ModelViewSet):
@@ -25,7 +36,7 @@ class CarImageViewSet(ModelViewSet):
     Car Image ViewSet
     """
 
-    queryset = CarImage.objects.all()
+    queryset = CarImage.objects.select_related("car", "user").all()
     serializer_class = CarImageSerializer
 
     def perform_create(self, serializer):
