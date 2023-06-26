@@ -8,18 +8,27 @@ class CarSerializer(serializers.ModelSerializer):
     Car Serializer
     """
 
+    url = serializers.HyperlinkedIdentityField(view_name="car-detail")
+
     features = serializers.SlugRelatedField(
-        many=True, read_only=True, slug_field="name"
+        slug_field="name",
+        read_only=False,
+        many=True,
+        queryset=CarFeature.objects.all(),
     )
 
     pictures = serializers.HyperlinkedRelatedField(
-        many=True, read_only=True, view_name="image-detail", source="images"
+        view_name="image-detail",
+        read_only=True,
+        many=True,
+        source="images",
     )
 
     class Meta:
         model = Car
         fields = (
             "id",
+            "url",
             "make",
             "model",
             "year",
@@ -47,13 +56,7 @@ class CarImageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CarImage
-        fields = (
-            "id",
-            "url",
-            "car",
-            "image",
-            "user",
-        )
+        fields = ("id", "url", "car", "image", "user")
         read_only_fields = ("user",)
 
 
@@ -64,7 +67,4 @@ class CarFeatureSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CarFeature
-        fields = (
-            "id",
-            "name",
-        )
+        fields = ("id", "name")
