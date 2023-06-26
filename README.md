@@ -48,7 +48,7 @@
     python manage.py runserver
     ```
 
-7. Open the browser and navigate to [`localhost:8000/admin`](localhost:8000/admin) to access the admin site (login with your superuser credentials) and [`localhost:8000/apis/`](localhost:8000/apis/) to access the API endpoints on the browsable API.
+7. Open the browser and navigate to [`localhost:8000/admin`](localhost:8000/admin) to access the admin site (login with your superuser credentials) and [`localhost:8000/api/`](localhost:8000/api/) to access the API endpoints on the browsable API.
 
 8. On the admin site, you can add new cars, features and images. You can also assign permissions to users as group or individual permissions.
 
