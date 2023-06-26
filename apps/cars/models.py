@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.urls import reverse
 
 from apps.utils.models import TimeStampedModel
 
@@ -82,13 +83,13 @@ class Car(TimeStampedModel):
 
     model = models.CharField(max_length=255, blank=False)
 
-    year = models.IntegerField(null=False)
+    year = models.PositiveSmallIntegerField(null=False, blank=False)
 
-    engine_size = models.IntegerField()
+    engine_size = models.PositiveSmallIntegerField(null=False, blank=True)
 
-    mileage = models.IntegerField()
+    mileage = models.PositiveIntegerField(null=False, blank=True)
 
-    price = models.IntegerField()
+    price = models.PositiveIntegerField(null=False, blank=False)
 
     fuel_type = models.CharField(
         max_length=255, choices=FuelTypeChoices.choices, blank=False
@@ -120,6 +121,9 @@ class Car(TimeStampedModel):
     def __str__(self):
         return f"{self.year} {self.model} {self.make}"
 
+    def get_absolute_url(self):
+        return reverse("car-detail", kwargs={"pk": self.pk})
+
 
 class CarImage(TimeStampedModel):
     """
@@ -130,7 +134,7 @@ class CarImage(TimeStampedModel):
 
     image = models.ImageField(upload_to="cars")
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="cars")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="images")
 
     def __str__(self):
         return f"{self.car.year} {self.car.model} {self.car.make} Image: {self.id}"
