@@ -15,8 +15,6 @@ class CarAdmin(admin.ModelAdmin):
         "modified",
     )
     list_filter = (
-        "model",
-        "price",
         "year",
         "created",
         "modified",
@@ -39,11 +37,6 @@ class CarFeatureAdmin(admin.ModelAdmin):
         "created",
         "modified",
     )
-    list_filter = (
-        "name",
-        "created",
-        "modified",
-    )
     search_fields = ("name",)
     list_per_page = 25
 
@@ -58,8 +51,6 @@ class CarImageAdmin(admin.ModelAdmin):
         "modified",
     )
     list_filter = (
-        "car",
-        "user",
         "created",
         "modified",
     )
