@@ -85,9 +85,9 @@ class Car(TimeStampedModel):
 
     year = models.PositiveSmallIntegerField(null=False, blank=False)
 
-    engine_size = models.PositiveSmallIntegerField(null=False, blank=True)
+    engine_size = models.PositiveSmallIntegerField(null=False, blank=False)
 
-    mileage = models.PositiveIntegerField(null=False, blank=True)
+    mileage = models.PositiveIntegerField(null=True, blank=True)
 
     price = models.PositiveIntegerField(null=False, blank=False)
 
