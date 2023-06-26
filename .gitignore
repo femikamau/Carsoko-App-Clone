@@ -17,3 +17,6 @@ media/cars/*
 # Coverage
 htmlcov/
 .coverage
+
+# Migrations
+**/migrations/0*.py
