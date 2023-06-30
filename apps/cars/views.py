@@ -1,8 +1,9 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
 from rest_framework.filters import OrderingFilter, SearchFilter
+from rest_framework.mixins import ListModelMixin
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import GenericViewSet, ModelViewSet
 
 from .models import Car, CarFeature, CarImage
 from .serializers import CarFeatureSerializer, CarImageSerializer, CarSerializer
@@ -23,11 +24,12 @@ class CarViewSet(ModelViewSet):
         "price": ["lte"],
         "mileage": ["lte"],
         "engine_size": ["gte", "lte"],
-        "transmission": ["exact"],
         "fuel_type": ["exact"],
+        "transmission": ["exact"],
         "body_type": ["exact"],
         "drive_type": ["exact"],
         "condition": ["exact"],
+        "features": ["exact"],
     }
 
 
@@ -42,6 +44,19 @@ class CarImageViewSet(ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
+    def list(self, request, *args, **kwargs):
+        # If the user has "cars.add_carimage" permission, show all their images
+        if request.user.has_perm("cars.add_carimage"):
+            self.queryset = CarImage.objects.filter(user=request.user)
+
+        else:
+            return Response(
+                data={"detail": "You do not have permission to view this."},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+
+        return super().list(request, *args, **kwargs)
+
     def update(self, request, *args, **kwargs):
         # Check if the user is the owner of the image
         car_image = self.get_object()
@@ -53,8 +68,8 @@ class CarImageViewSet(ModelViewSet):
         return super().update(request, *args, **kwargs)
 
     def destroy(self, request, *args, **kwargs):
-        # Check if the user is the owner of the image
         car_image = self.get_object()
+        # Check if the user is the owner of the image or is staff
         if car_image.user != request.user and not request.user.is_staff:
             return Response(
                 {"detail": "You do not have permission to delete this image."},
@@ -63,7 +78,7 @@ class CarImageViewSet(ModelViewSet):
         return super().destroy(request, *args, **kwargs)
 
 
-class CarFeatureViewSet(ModelViewSet):
+class CarFeatureViewSet(ListModelMixin, GenericViewSet):
     """
     Car Feature ViewSet
     """
