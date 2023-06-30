@@ -52,7 +52,10 @@ class CarImageSerializer(serializers.ModelSerializer):
     """
 
     url = serializers.HyperlinkedIdentityField(view_name="image-detail")
-    user = serializers.HyperlinkedRelatedField(read_only=True, view_name="user-detail")
+    car = serializers.HyperlinkedRelatedField(
+        view_name="car-detail", read_only=False, queryset=Car.objects.all()
+    )
+    user = serializers.HyperlinkedRelatedField(view_name="user-detail", read_only=True)
 
     class Meta:
         model = CarImage
