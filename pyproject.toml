@@ -19,6 +19,7 @@ black = "^23.3.0"
 django-environ = "^0.10.0"
 coverage = "^7.2.7"
 factory-boy = "^3.2.1"
+ipython = "^8.14.0"
 
 
 [build-system]
