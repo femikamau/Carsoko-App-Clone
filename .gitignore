@@ -12,7 +12,7 @@ db.sqlite3
 
 # Media
 media/cars/*
-!media/cars/delete_me.txt
+!media/cars/.gitkeep
 
 # Coverage
 htmlcov/
